@@ -1,4 +1,4 @@
-# 2025 IS 101 Workshop Documentation
+# 2025 PEKOM IS 101 Workshop Documentation
 
 ## Introduction
 This workshop is organized as part of a student-led initiative under PEKOM, the student club of the Faculty of Computer Science and Information Technology, University of Malaya.
