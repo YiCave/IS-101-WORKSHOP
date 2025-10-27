@@ -55,11 +55,13 @@ This workshop will require several pre-installation and setup. Participants are 
 ---
 
 ✅ **Tips for Students**
+- If you are still unsure, you can follow this tutorial video https://youtu.be/oPV2sjMG53U?si=nUT3JjtsEPFFhzta . Windows (2:23), MacOS (6:06).
 - Remember your root password — you’ll need it to connect Workbench to the server.  
 - If MySQL Workbench fails to connect, ensure the MySQL server is running.  
 - For macOS users, if the *MySQL* icon doesn’t appear in System Preferences, try reinstalling from the DMG file.
 
-ii) JDBC
+#### ii) JDBC installation
+1. 
 
 ### 3. Encryption Session
 - no prior setup required
