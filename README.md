@@ -60,8 +60,73 @@ This workshop will require several pre-installation and setup. Participants are 
 - If MySQL Workbench fails to connect, ensure the MySQL server is running.  
 - For macOS users, if the *MySQL* icon doesn’t appear in System Preferences, try reinstalling from the DMG file.
 
-#### ii) JDBC installation
-1. 
+#### ii) ⚙️ Setting Up MySQL JDBC Connector in Apache NetBeans IDE
+
+🔽 **Download the JDBC Connector**
+1. Go to [https://dev.mysql.com/downloads/connector/j/](https://dev.mysql.com/downloads/connector/j/).
+2. Under **Select Operating System**, choose **Platform Independent**.
+3. Click **Download** for *Platform Independent (Architecture Independent), ZIP Archive* (e.g., `mysql-connector-j-9.5.0.zip`).
+   - Then choose **“No thanks, just start my download.”**
+4. Once downloaded, **extract** the ZIP file (right-click → *Extract All*).
+
+---
+
+🧩 **Configure JDBC Driver in NetBeans**
+5. Open **Apache NetBeans IDE**.
+6. In the left section of the interface, go to the **Services** tab.
+7. Expand **Databases**, then select **New Connection...**
+8. Under **Driver**, ensure **MySQL (Connector/J driver)** is selected.  
+   - If it’s missing, click **Add...** on the right and navigate to the extracted folder.  
+   - Select the `.jar` file (e.g., `mysql-connector-j-9.5.0.jar`).
+9. Click **Next >**.
+10. Enter your MySQL **Root Password** (the one you set earlier during installation).  
+    - If the password is correct and the MySQL server is running, you should see **“Connection succeeded.”**  
+    - Then click **Next >**.
+11. Under **Choose Database Schema**, click **Next >**, and on the next page, click **Finish**.
+
+---
+
+💻 **Link JDBC to Your Java Project**
+12. Create a **Java with Ant** project in Apache NetBeans IDE.
+13. In the **Projects** tab, expand your project folder.
+14. Right-click **Libraries** → select **Add JAR/Folder...**
+15. Navigate to the extracted JDBC connector folder and select the `.jar` file (e.g., `mysql-connector-j-9.5.0.jar`).
+16. Click **Open** to add the connector to your project libraries.
+
+---
+
+✅ **Tips for Students**
+- If you are still unsure, you can follow this tutorial video https://youtu.be/oPV2sjMG53U?si=nUT3JjtsEPFFhzta . Windows (2:23), MacOS (6:06).
+- Ensure your MySQL Server is running before testing the connection.
+- If you get a “Driver not found” error, double-check that the .jar file is correctly linked under Libraries.
+- Keep the connector file in a permanent location — moving or deleting it may break the link in your project.
+
+---
+
+✅ **Verification**
+- Create a simple Java file and try connecting to your database using `DriverManager.getConnection(...)`.  
+- If the connection is successful, your JDBC setup is complete! 🎉
+
+Example test snippet:
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class TestConnection {
+    public static void main(String[] args) {
+         // for url, user and password please check and replace with the one you set
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            System.out.println("Connection successful!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+---
 
 ### 3. Encryption Session
 - no prior setup required
