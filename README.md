@@ -119,7 +119,6 @@ public class TestConnection {
 }
 ```
 
----
 
 ✅ **Tips for Students**
 - If you are still unsure, you can follow this tutorial video https://youtu.be/rgF-5CwTZeE?si=JDNICvMDh-XpiNZL , using the timestamp 1:28 - 6:10.
@@ -132,4 +131,3 @@ public class TestConnection {
 ### 3. Encryption Session
 - no prior setup required
 - source code is included in \Encryption 
-
