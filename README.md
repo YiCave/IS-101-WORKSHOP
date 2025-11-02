@@ -60,6 +60,8 @@ This workshop will require several pre-installation and setup. Participants are 
 - If MySQL Workbench fails to connect, ensure the MySQL server is running.  
 - For macOS users, if the *MySQL* icon doesn’t appear in System Preferences, try reinstalling from the DMG file.
 
+--- 
+
 #### ii) ⚙️ Setting Up MySQL JDBC Connector in Apache NetBeans IDE
 
 🔽 **Download the JDBC Connector**
@@ -69,9 +71,8 @@ This workshop will require several pre-installation and setup. Participants are 
    - Then choose **“No thanks, just start my download.”**
 4. Once downloaded, **extract** the ZIP file (right-click → *Extract All*).
 
----
-
 🧩 **Configure JDBC Driver in NetBeans**
+
 5. Open **Apache NetBeans IDE**.
 6. In the left section of the interface, go to the **Services** tab.
 7. Expand **Databases**, then select **New Connection...**
@@ -84,7 +85,6 @@ This workshop will require several pre-installation and setup. Participants are 
     - Then click **Next >**.
 11. Under **Choose Database Schema**, click **Next >**, and on the next page, click **Finish**.
 
----
 
 💻 **Link JDBC to Your Java Project**
 12. Create a **Java with Ant** project in Apache NetBeans IDE.
