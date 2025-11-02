@@ -85,21 +85,13 @@ This workshop will require several pre-installation and setup. Participants are 
     - Then click **Next >**.
 11. Under **Choose Database Schema**, click **Next >**, and on the next page, click **Finish**.
 
-
 💻 **Link JDBC to Your Java Project**
+
 12. Create a **Java with Ant** project in Apache NetBeans IDE.
 13. In the **Projects** tab, expand your project folder.
 14. Right-click **Libraries** → select **Add JAR/Folder...**
 15. Navigate to the extracted JDBC connector folder and select the `.jar` file (e.g., `mysql-connector-j-9.5.0.jar`).
 16. Click **Open** to add the connector to your project libraries.
-
----
-
-✅ **Tips for Students**
-- If you are still unsure, you can follow this tutorial video https://youtu.be/oPV2sjMG53U?si=nUT3JjtsEPFFhzta . Windows (2:23), MacOS (6:06).
-- Ensure your MySQL Server is running before testing the connection.
-- If you get a “Driver not found” error, double-check that the .jar file is correctly linked under Libraries.
-- Keep the connector file in a permanent location — moving or deleting it may break the link in your project.
 
 ---
 
@@ -125,7 +117,16 @@ public class TestConnection {
         }
     }
 }
+```
 
+---
+
+✅ **Tips for Students**
+- If you are still unsure, you can follow this tutorial video https://youtu.be/rgF-5CwTZeE?si=JDNICvMDh-XpiNZL , using the timestamp 1:28 - 6:10.
+- Ensure your MySQL Server is running before testing the connection.
+- If you get a “Driver not found” error, double-check that the .jar file is correctly linked under Libraries.
+- Keep the connector file in a permanent location — moving or deleting it may break the link in your project.
+  
 ---
 
 ### 3. Encryption Session
