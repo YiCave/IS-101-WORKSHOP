@@ -3,14 +3,12 @@ import java.util.Scanner;
 
 public class FSKTMMiniMarket {
 
-    // === CHANGE THESE TO MATCH YOUR MYSQL ===
-    static final String DB_URL  = "jdbc:mysql://localhost:3306/your_db_name?serverTimezone=UTC";
-    static final String DB_USER = "root";
-    static final String DB_PASS = "your_password";
+    static final String DB_URL  = "---";
+    static final String DB_USER = "---";
+    static final String DB_PASS = "---";
 
     static final Scanner sc = new Scanner(System.in);
 
-    // Simple cart using parallel arrays (no extra classes needed)
     static final int CART_CAPACITY = 20;
     static int[] cartProductIds = new int[CART_CAPACITY];
     static int[] cartQtys       = new int[CART_CAPACITY];
@@ -39,14 +37,11 @@ public class FSKTMMiniMarket {
         }
     }
 
-    // ---------- BASIC JDBC ----------
     static Connection getConnection() throws Exception {
-        // Optional: ensure driver present
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
     }
 
-    // ---------- REGISTER ----------
     static void registerFlow() {
         try (Connection conn = getConnection()) {
             System.out.println("\n=== Register ===");
@@ -59,7 +54,6 @@ public class FSKTMMiniMarket {
             System.out.print("Password: ");
             String pass = sc.nextLine().trim();
 
-            // Is staff? (normally false)
             System.out.println("Are you registering as staff?");
             System.out.println("1. Yes");
             System.out.println("2. No");
@@ -96,7 +90,6 @@ public class FSKTMMiniMarket {
         return 1;
     }
 
-    // ---------- LOGIN ----------
     static void loginFlow() {
         System.out.println("\nAre you a FSKTM mini market staff?");
         System.out.println("1. Yes");
@@ -142,7 +135,6 @@ public class FSKTMMiniMarket {
         }
     }
 
-    // ---------- STAFF ----------
     static void staffMenu() {
         while (true) {
             System.out.println("\n=== Staff Menu ===");
@@ -227,10 +219,9 @@ public class FSKTMMiniMarket {
         }
     }
 
-    // ---------- CONSUMER ----------
     static void consumerShopFlow(int consumerId) {
-        cartCount = 0; // reset cart
-        autoRestockIfAllZero(); // ensure shop isn't fully empty
+        cartCount = 0;
+        autoRestockIfAllZero();
 
         while (true) {
             showItems();
@@ -265,7 +256,6 @@ public class FSKTMMiniMarket {
             System.out.print("Quantity: ");
             int qty = Integer.parseInt(sc.nextLine().trim());
 
-            // Check stock
             int stock = getStock(conn, pid);
             if (stock < 0) {
                 System.out.println("Product not found.");
@@ -288,7 +278,6 @@ public class FSKTMMiniMarket {
                 return;
             }
 
-            // Add to cart (merge if same pid already in cart)
             int idx = findInCart(pid);
             if (idx >= 0) {
                 cartQtys[idx] += qty;
@@ -324,7 +313,7 @@ public class FSKTMMiniMarket {
                 if (rs.next()) return rs.getInt(1);
             }
         }
-        return -1; // not found
+        return -1;
     }
 
     static boolean allItemsZero(Connection conn) throws SQLException {
@@ -351,7 +340,6 @@ public class FSKTMMiniMarket {
     }
 
     static void autoRestock(Connection conn) throws SQLException {
-        // simple policy: add +5 to all items
         try (Statement st = conn.createStatement()) {
             st.executeUpdate("UPDATE items SET quantity_left = quantity_left + 5");
         }
@@ -380,12 +368,10 @@ public class FSKTMMiniMarket {
         }
         try (Connection conn = getConnection()) {
             conn.setAutoCommit(false);
-            // Re-check stock and update + create transactions
             for (int i = 0; i < cartCount; i++) {
                 int pid = cartProductIds[i];
                 int qty = cartQtys[i];
 
-                // Check stock again (prevent race)
                 int stock = getStock(conn, pid);
                 if (stock < qty) {
                     conn.rollback();
@@ -394,21 +380,10 @@ public class FSKTMMiniMarket {
                     return;
                 }
 
-                // Insert transaction
-                String ins = "INSERT INTO transactions (consumer_id, product_id, quantity) VALUES (?, ?, ?)";
-                try (PreparedStatement ps = conn.prepareStatement(ins)) {
-                    ps.setInt(1, consumerId);
-                    ps.setInt(2, pid);
-                    ps.setInt(3, qty);
-                    ps.executeUpdate();
-                }
-
-                // Deduct stock
-                String upd = "UPDATE items SET quantity_left = quantity_left - ? WHERE product_id = ? AND quantity_left >= ?";
+                String upd = "UPDATE items SET quantity_left = quantity_left - ? WHERE product_id = ?";
                 try (PreparedStatement ps2 = conn.prepareStatement(upd)) {
                     ps2.setInt(1, qty);
                     ps2.setInt(2, pid);
-                    ps2.setInt(3, qty);
                     int done = ps2.executeUpdate();
                     if (done == 0) {
                         conn.rollback();
@@ -417,20 +392,33 @@ public class FSKTMMiniMarket {
                         return;
                     }
                 }
+
+                String ins = "INSERT INTO transactions (consumer_id, product_id, quantity) VALUES (?, ?, ?)";
+                try (PreparedStatement ps = conn.prepareStatement(ins)) {
+                    ps.setInt(1, consumerId);
+                    ps.setInt(2, pid);
+                    ps.setInt(3, qty);
+                    ps.executeUpdate();
+                }
             }
 
             conn.commit();
             conn.setAutoCommit(true);
             System.out.println("Checkout successful! Thank you.");
-            cartCount = 0; // clear cart
+            
+            for (int i = 0; i < cartCount; i++) {
+                cartProductIds[i] = 0;
+                cartQtys[i] = 0;
+            }
+            cartCount = 0;
 
-            // If everything is now zero, auto-restock
             if (allItemsZero(conn)) {
                 System.out.println("All items sold out after checkout. Auto-restocking...");
                 autoRestock(conn);
             }
         } catch (Exception e) {
             System.out.println("Checkout error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
