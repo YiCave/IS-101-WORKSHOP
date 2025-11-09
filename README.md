@@ -123,6 +123,7 @@ public class TestConnection {
 ✅ **Tips for Students**
 - If you are still unsure, you can follow this tutorial video https://youtu.be/rgF-5CwTZeE?si=JDNICvMDh-XpiNZL , using the timestamp 1:28 - 6:10.
 - Ensure your MySQL Server is running before testing the connection.
+- If MySQL Server is not running: Win + R -> services.msc -> find MySQL -> Right click, Start
 - If you get a “Driver not found” error, double-check that the .jar file is correctly linked under Libraries.
 - Keep the connector file in a permanent location — moving or deleting it may break the link in your project.
   
