@@ -23,15 +23,14 @@ CREATE TABLE transactions (
   consumer_id    INT,
   product_id     INT NOT NULL,
   quantity       INT,
-  -- FK constraints to keep data consistent
+ 
   CONSTRAINT fk_transactions_consumer 
-    FOREIGN KEY (consumer_id) REFERENCES consumers(consumer_id), -- to be confirmed will be teached or not
+    FOREIGN KEY (consumer_id) REFERENCES consumers(consumer_id),  
   CONSTRAINT fk_transactions_product
     FOREIGN KEY (product_id)  REFERENCES items(product_id)
 );
 
 -- pre insert some datas for items
--- Insert 5 starter items (no AUTO_INCREMENT on product_id)
 INSERT INTO items (product_id, item_name, item_description, item_price, quantity_left, restock_at) VALUES
   (101, 'Chips',   'Potato chips 60g',         2.50, 3, NULL),
   (102, 'Milo',    'Milo can 240ml',           3.20, 3, NULL),
