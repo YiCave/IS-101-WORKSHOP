@@ -112,13 +112,10 @@ public class TestConnection {
         String password = "password";
 
         try {
-            // Load MySQL JDBC driver (older method, optional for newer Java)
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             try (Connection conn = DriverManager.getConnection(url, user, password)) {
                 System.out.println("Connection successful!");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
