@@ -106,12 +106,19 @@ import java.sql.DriverManager;
 
 public class TestConnection {
     public static void main(String[] args) {
-         // for url, user and password please check and replace with the one you set
+        // for url, user and password please check and replace with the one you set
         String url = "jdbc:mysql://localhost:3306/testdb";
         String user = "root";
         String password = "password";
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connection successful!");
+
+        try {
+            // Load MySQL JDBC driver (older method, optional for newer Java)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            try (Connection conn = DriverManager.getConnection(url, user, password)) {
+                System.out.println("Connection successful!");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
