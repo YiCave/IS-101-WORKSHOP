@@ -1,4 +1,4 @@
-# 2025 PEKOM IS 101 Workshop Documentation
+# 2025 PEKOM Build & Break: Information Systems 101 Workshop Documentation
 
 ## Introduction
 This workshop is organized as part of a student-led initiative under PEKOM, the student club of the Faculty of Computer Science and Information Technology, University of Malaya.
@@ -106,12 +106,16 @@ import java.sql.DriverManager;
 
 public class TestConnection {
     public static void main(String[] args) {
-         // for url, user and password please check and replace with the one you set
+        // for url, user and password please check and replace with the one you set
         String url = "jdbc:mysql://localhost:3306/testdb";
         String user = "root";
         String password = "password";
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connection successful!");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection conn = DriverManager.getConnection(url, user, password)) {
+                System.out.println("Connection successful!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,4 +135,26 @@ public class TestConnection {
 
 ### 3. Encryption Session
 - no prior setup required
-- source code is included in \Encryption 
+- source code is included in \Encryption
+
+---
+
+## Additional Resources
+
+Participants can access supplementary materials and extra notes in the dedicated folder:
+
+* [Workshop Resources Folder](https://drive.google.com/drive/folders/1V1Rh4wuLDTV4LQEQ5X5-m_Wl8t_B4BSg)
+
+---
+
+## Credits
+
+This workshop and its related materials were prepared by the **UM PEKOM Build & Break: Information Systems 101 Committee**:
+
+* Choon Yi Keith
+* Tan Hui Zhe
+* Lee Qian Yi
+* Saw Yong Quan
+* Lai Joey
+* Chan Yi Ern
+* Ong Yean
